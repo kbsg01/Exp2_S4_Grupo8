@@ -3,7 +3,6 @@ package model;
 public class Producto {
     private final String codigo;
     private String nombre;
-    private Categoria categoria;
     private String descripcion;
     private int stock;
     private double precio;
@@ -17,13 +16,12 @@ public class Producto {
      * @param precio Precio del producto.
      *
      * */
-    public Producto(String codigo, String nombre, Categoria categoria, String descripcion, double precio, int stock ) {
+    public Producto(String codigo, String nombre, String descripcion, double precio, int stock ) {
         this.codigo = codigo;
         this.setNombre(nombre);
         this.setDescripcion(descripcion);
         this.setStock(stock);
         this.setPrecio(precio);
-        this.setCategoria(categoria);
     }
 
     // Getters y Setters
@@ -32,12 +30,6 @@ public class Producto {
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public Categoria getCategoria() { return categoria; }
-    public void setCategoria(Categoria categoria) {
-        if (categoria != null) {
-            this.categoria = categoria;
-        }
-    }
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
@@ -50,18 +42,16 @@ public class Producto {
 
     /**
      * Muestra la descripción completa del producto.
-     * @param p El producto cuya descripción se va a mostrar.
     * **/
-    public void fullDescription(Producto p) {
+    public void fullDescription() {
         System.out.println("-".repeat(30));
         System.out.println("DETALLE DEL PRODUCTO");
         System.out.println("-".repeat(30));
-        System.out.println("Código: " + p.getCodigo());
-        System.out.println("Nombre: " + p.getNombre());
-        System.out.printf("Categoría: %s%n", p.getCategoria() != null ? p.getCategoria() : "Sin categoría");
-        System.out.println("Precio: $" + p.getPrecio());
-        System.out.println("Stock: "+ p.getStock());
-        System.out.println("Descripción: " + descripcion);
+        System.out.println("Código: " + this.getCodigo());
+        System.out.println("Nombre: " + this.getNombre());
+        System.out.println("Precio: $" + this.getPrecio());
+        System.out.println("Stock: "+ this.getStock());
+        System.out.println("Descripción: " + this.getDescripcion());
         System.out.println("-".repeat(30));
     }
 
@@ -71,7 +61,6 @@ public class Producto {
      * **/
     @Override
     public String toString() {
-        String categoria = this.categoria == null ? "Sin categoría" : this.categoria.name();
-        return "[ " + codigo + " ] | "+ stock+" | " + nombre + " | " + categoria + " | $" + precio + " | " + descripcion.substring(0, Math.min(20, descripcion.length())) + "..."+" |" ;
+        return "[ " + codigo + " ] | "+ stock+" | " + nombre + " | $" + precio + " | " + descripcion.substring(0, Math.min(20, descripcion.length())) + "..."+" |" ;
     }
 }
