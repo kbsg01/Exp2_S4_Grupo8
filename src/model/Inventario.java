@@ -14,10 +14,19 @@ public class Inventario {
         productos.put(producto.getCodigo(), producto);
     }
 
+    /**
+     * * Elimina un producto del inventario basado en su código.
+     * * @param codigo El código del producto a eliminar.
+     * */
     public void deleteProducto(String codigo) {
         productos.remove(codigo);
     }
 
+    /**
+     * * Busca un producto en el inventario basado en su código.
+     * * @param codigo El código del producto a buscar.
+     * * @return El producto encontrado o null si no existe.
+     * **/
     public Producto searchByCode(String codigo) {
         return productos.get(codigo);
     }
@@ -26,6 +35,8 @@ public class Inventario {
         for (Producto p : productos.values()) {
             if (p.getNombre().equalsIgnoreCase(nombre)) {
                 p.fullDescription(p);
+            } else {
+                System.out.println("No se encontró el(los) producto(s) con el nombre: " + nombre);
             }
         }
     }
@@ -34,6 +45,8 @@ public class Inventario {
         for (Producto p : productos.values()) {
             if (p.getDescripcion().toLowerCase().contains(descripcion.toLowerCase())) {
                 p.fullDescription(p);
+            } else {
+                System.out.println("No se encontró el(los) producto(s) con la descripción: " + descripcion);
             }
         }
     }

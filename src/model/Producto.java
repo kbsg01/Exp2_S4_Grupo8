@@ -4,15 +4,24 @@ public class Producto {
     private final String codigo;
     private String nombre;
     private Categoria categoria;
+    private String descripcion;
     private int stock;
     private double precio;
-    private String descripcion;
 
-    // Constructor
-    public Producto(String nombre, double precio, String descripcion, String codigo) {
+    /**
+     * Constructor de la clase Producto.
+     * @param codigo Código único del producto.
+     * @param nombre Nombre del producto.
+     * @param descripcion Descripción del producto.
+     * @param stock Cantidad en inventario.
+     * @param precio Precio del producto.
+     *
+     * */
+    public Producto(String codigo, String nombre, String descripcion, double precio, int stock ) {
         this.codigo = codigo;
         this.setNombre(nombre);
         this.setDescripcion(descripcion);
+        this.setPrecio(stock);
         this.setPrecio(precio);
     }
 
@@ -34,7 +43,10 @@ public class Producto {
     public double getPrecio() { return precio; }
     public void setPrecio(double precio) { this.precio = precio; }
 
-
+    /**
+     * Muestra la descripción completa del producto.
+     * @param p El producto cuya descripción se va a mostrar.
+    * **/
     public void fullDescription(Producto p) {
         System.out.println("-".repeat(30));
         System.out.println("DETALLE DEL PRODUCTO");
@@ -48,6 +60,10 @@ public class Producto {
         System.out.println("-".repeat(30));
     }
 
+    /**
+     * Representación en cadena del producto.
+     * @return Una cadena que representa el producto.
+     * **/
     @Override
     public String toString() {
         String categoria = this.categoria == null ? "Sin categoría" : this.categoria.name();
