@@ -9,8 +9,29 @@ import java.util.Scanner;
  * Se encarga de validar las entradas del usuario antes de interactuar con el modelo.
  */
 public class ProductoView {
-
     private final Scanner scanner = new Scanner(System.in);
+
+    public void displayProductoMenu() {
+        System.out.println("=== MENÚ MODIFICACIÓN INVENTARIO ===");
+    System.out.println("1. Agregar producto");
+    System.out.println("2. Eliminar producto");
+        System.out.println("0. Volver al menú principal");
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
+    public int getUserChoice() {
+        while (true) {
+            try {
+                System.out.print("Seleccione una opción: ");
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                displayMessage("Error: ingrese un número válido.");
+            }
+        }
+    }
 
     /**
      * Solicita los datos al usuario y crea un producto validado.
@@ -81,25 +102,6 @@ public class ProductoView {
 
     // Métodos auxiliares
 
-    /** Solicita repetidamente un campo obligatorio hasta que tenga contenido. */
-    private String obtenerCampoObligatorio(String campo) {
-        String valor;
-        do {
-            System.out.print(campo + ": ");
-            valor = scanner.nextLine().trim();
-            if (valor.isEmpty()) {
-                System.out.println("El " + campo.toLowerCase() + " es obligatorio.");
-            }
-        } while (valor.isEmpty());
-        return valor;
-    }
-
-    /** Solicita un campo opcional mostrando el valor actual. */
-    private String obtenerCampoOpcional(String campo, String actual) {
-        System.out.printf("%s (%s): ", campo, actual);
-        return scanner.nextLine().trim();
-    }
-
     /** Solicita y valida el precio. */
     private double obtenerPrecio() {
         while (true) {
@@ -131,10 +133,27 @@ public class ProductoView {
                     return stock;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Debe ingresar un número entero para el stock.");
+                System.out.println("Debe ingresar un número entero para el stock."+e.getMessage());
             }
         }
     }
 
+    /** Solicita repetidamente un campo obligatorio hasta que tenga contenido. */
+    public String obtenerCampoObligatorio(String campo) {
+        String valor;
+        do {
+            System.out.print(campo + ": ");
+            valor = scanner.nextLine().trim();
+            if (valor.isEmpty()) {
+                System.out.println("El " + campo.toLowerCase() + " es obligatorio.");
+            }
+        } while (valor.isEmpty());
+        return valor;
+    }
 
+    /** Solicita un campo opcional mostrando el valor actual. */
+    public String obtenerCampoOpcional(String campo, String actual) {
+        System.out.printf("%s (%s): ", campo, actual);
+        return scanner.nextLine().trim();
+    }
 }

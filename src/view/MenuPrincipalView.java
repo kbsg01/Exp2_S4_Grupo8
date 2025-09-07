@@ -2,21 +2,21 @@ package view;
 
 import java.util.Scanner;
 
-public class MenuPrincipalView implements IView {
+public class MenuPrincipalView {
     private final Scanner scanner = new Scanner(System.in);
 
-    @Override
     public void displayMenu() {
         System.out.println("=== MENÚ PRINCIPAL ===");
-        System.out.println("1. Agregar producto");
-        System.out.println("2. Eliminar producto");
-        System.out.println("3. Buscar producto por código");
-        System.out.println("4. Listar productos");
-        System.out.println("5. Reporte de inventario");
+        System.out.println("1. Modificar inventario");
+        System.out.println("2. Buscar y listar productos");
+        System.out.println("3. Reporte de inventario");
         System.out.println("0. Salir");
     }
 
-    @Override
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
     public int getUserChoice() {
         while (true) {
             try {
@@ -28,13 +28,7 @@ public class MenuPrincipalView implements IView {
         }
     }
 
-    @Override
-    public void displayMessage(String message) {
-        System.out.println(message);
-    }
-
-    @Override
-    public String getInput(String prompt) {
+    String getInput(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
     }

@@ -1,86 +1,95 @@
 package controller;
-
-import model.Inventario;
-import model.Producto;
-import view.IView;
+import view.InventarioView;
+import view.MenuPrincipalView;
+import view.ProductoView;
 
 public class MenuPrincipalController implements IController {
-    private final Inventario inventario;
-    private final IView view;
+    private final MenuPrincipalView menuView;
+    private final ProductoView productoView;
+    private final InventarioView inventarioView;
 
-    public MenuPrincipalController(Inventario inventario, IView view) {
-        this.inventario = inventario;
-        this.view = view;
+    public MenuPrincipalController( MenuPrincipalView menuView, ProductoView productoView, InventarioView inventarioView) {
+        this.menuView = menuView;
+        this.productoView = productoView;
+        this.inventarioView = inventarioView;
     }
 
     @Override
     public void run() {
         int opcion;
         do {
-            view.displayMenu();
-            opcion = view.getUserChoice();
+            menuView.displayMenu();
+            opcion = menuView.getUserChoice();
+            switch (opcion) {
+                case 1 -> mostrarMenuModificacion();
+                case 2 -> mostrarMenuBusquedaYListado();
+                case 3 -> inventarioView.generarReporteInventario();
+                case 0 -> menuView.displayMessage("Saliendo...");
+                default -> menuView.displayMessage("Opción no válida.");
+            }
+        } while (opcion != 0);
+    }
+
+    // Métodos para manejar cada opción del menú
+    private void mostrarMenuModificacion() {
+        int opcion;
+        do {
+            productoView.displayProductoMenu();
+            opcion = productoView.getUserChoice();
             switch (opcion) {
                 case 1 -> agregarProducto();
                 case 2 -> eliminarProducto();
-                case 3 -> buscarProducto();
-                case 4 -> listarTodosLosProductos();
-                case 5 -> inventario.getInventoryReport();
-                case 0 -> view.displayMessage("Saliendo...");
-                default -> view.displayMessage("Opción no válida.");
+                case 0 -> menuView.displayMessage("Volviendo al menú principal...");
+                default -> menuView.displayMessage("Opción no válida.");
+            }
+        } while (opcion != 0);
+    }
+
+    private void mostrarMenuBusquedaYListado() {
+        int opcion;
+        do {
+            inventarioView.displayInventarioMenu();
+            opcion = inventarioView.getUserChoice();
+            switch (opcion) {
+                case 1 -> inventarioView.listarProductos();
+                case 2 -> inventarioView.generarReporteInventario();
+                case 3 -> inventarioView.buscarProductoPorCodigo();
+                case 4 -> inventarioView.buscarProductoPorNombre();
+                case 5 -> inventarioView.buscarProductoPorDescripcion();
+                case 0 -> menuView.displayMessage("Volviendo al menú principal...");
+                default -> menuView.displayMessage("Opción no válida.");
             }
         } while (opcion != 0);
     }
 
     private void agregarProducto() {
-        String codigo = view.getInput("Código: ");
-        String nombre = view.getInput("Nombre: ");
-        String descripcion = view.getInput("Descripción: ");
-        double precio;
-        while (true) {
-            try {
-                precio = Double.parseDouble(view.getInput("Precio: "));
-                break;
-            } catch (NumberFormatException e) {
-                view.displayMessage("Precio inválido. Intente nuevamente.");
+        try {
+            model.Producto nuevo = productoView.crearProducto();
+            if (nuevo == null) {
+                menuView.displayMessage("No se creó el producto.");
+                return;
             }
-        }
-        int stock;
-        while (true) {
-            try {
-                stock = Integer.parseInt(view.getInput("Stock: "));
-                break;
-            } catch (NumberFormatException e) {
-                view.displayMessage("Stock inválido. Intente nuevamente.");
+            // verificar existencia por código
+            if (inventarioView.getInventario().searchByCode(nuevo.getCodigo()) != null) {
+                menuView.displayMessage("Ya existe un producto con ese código.");
+                return;
             }
+            inventarioView.getInventario().addProducto(nuevo);
+            menuView.displayMessage("Producto agregado correctamente.");
+        } catch (Exception e) {
+            menuView.displayMessage("Error al agregar producto: " + e.getMessage());
         }
-        Producto producto = new Producto(codigo, nombre, descripcion, precio, stock);
-        inventario.addProducto(producto);
-        view.displayMessage("Producto agregado correctamente.");
     }
 
     private void eliminarProducto() {
-        String codigo = view.getInput("Código del producto a eliminar: ");
-        if (inventario.searchByCode(codigo) != null) {
-            inventario.deleteProducto(codigo);
-            view.displayMessage("Producto eliminado.");
-        } else {
-            view.displayMessage("No se encontró un producto con ese código.");
+        String codigo = productoView.obtenerCampoObligatorio("Código del producto a eliminar");
+        model.Producto existente = inventarioView.getInventario().searchByCode(codigo);
+        if (existente == null) {
+            menuView.displayMessage("No existe un producto con ese código.");
+            return;
         }
+        inventarioView.getInventario().deleteProducto(codigo);
+        menuView.displayMessage("Producto eliminado correctamente.");
     }
 
-    private void buscarProducto() {
-        String codigo = view.getInput("Código del producto: ");
-        Producto p = inventario.searchByCode(codigo);
-        if (p != null) {
-            p.fullDescription();
-        } else {
-            view.displayMessage("No se encontró un producto con ese código.");
-        }
-    }
-
-    private void listarTodosLosProductos() {
-        System.out.println("Listando todos los productos.");
-        System.out.println("| Código | Stock | Nombre | Precio | Descripción |");
-        inventario.listAllProductos();
-    }
 }
