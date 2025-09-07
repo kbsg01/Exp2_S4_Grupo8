@@ -98,8 +98,8 @@ public class Inventario {
      */
     public void getReporteInventario() {
         System.out.println("-".repeat(30));
-        totalProductos();
-        totalUnidadesEnStock();
+        System.out.println("Total de productos en inventario: " + totalProductos());
+        System.out.println("Total de unidades en stock: " + totalUnidadesEnStock());
         System.out.println("-".repeat(30));
         System.out.println("- Valor total del inventario: $" + valorTotalInventario());
         System.out.println("-".repeat(30));
@@ -111,16 +111,17 @@ public class Inventario {
     /**
      * Muestra el total de productos y unidades en stock en el inventario.
      **/
-    public void totalProductos() {
-        System.out.println("- Total de productos registrados en el inventario: " + productos.size());
+    public int totalProductos() {
+        int totalProductos = productos.size();
+        return totalProductos;
     }
 
     /**
      * Muestra el total de unidades en stock en el inventario.
      **/
-    public void totalUnidadesEnStock() {
+    public int totalUnidadesEnStock() {
         int totalStock = productos.values().stream().mapToInt(Producto::getStock).sum();
-        System.out.println("- Total de unidades en stock: " + totalStock);
+        return  totalStock;
     }
 
     /**
@@ -135,9 +136,6 @@ public class Inventario {
                 System.out.println(p.toString());
                 encontrado = true;
             }
-        }
-        if (!encontrado) {
-            System.out.println("No hay productos con stock menor o igual a " + umbral + ".");
         }
     }
 

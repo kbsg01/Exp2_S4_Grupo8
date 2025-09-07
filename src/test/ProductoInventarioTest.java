@@ -20,6 +20,7 @@ public class ProductoInventarioTest {
         probarAgregarProducto();
         probarBuscarPorCodigo();
         probarBuscarPorNombreYDescripcion();
+        probarActualizarProducto();
         probarEliminarProducto();
         probarCoherenciaInventario();
 
@@ -99,6 +100,34 @@ public class ProductoInventarioTest {
             }
         } catch (Exception e) {
             verificar("Búsqueda por descripción lanza excepción", false);
+        }
+    }
+
+    private static void probarActualizarProducto() {
+        System.out.println("\n>> Prueba: Actualizar producto (usando setters)");
+        inventario = new Inventario();
+
+        // Agregar producto original
+        Producto original = new Producto("P010", "Tablet", "Tablet básica", 300.0, 20);
+        inventario.addProducto(original);
+
+        // Obtener referencia al producto almacenado y actualizar mediante setters
+        Producto encontrado = inventario.searchByCode("P010");
+        if (encontrado != null) {
+            // Actualizar campos usando setters (no se requiere updateProducto en Inventario)
+            encontrado.setNombre("Tablet Pro");
+            encontrado.setDescripcion("Tablet avanzada");
+            encontrado.setPrecio(450.0);
+            encontrado.setStock(15);
+
+            // Verificaciones
+            verificar("Producto existe después de actualizar", true);
+            verificar("Nombre actualizado", "Tablet Pro".equals(encontrado.getNombre()));
+            verificar("Descripción actualizada", "Tablet avanzada".equals(encontrado.getDescripcion()));
+            verificar("Precio actualizado", 450.0 == encontrado.getPrecio());
+            verificar("Stock actualizado", 15 == encontrado.getStock());
+        } else {
+            verificar("Producto debería existir antes de actualizar", false);
         }
     }
 

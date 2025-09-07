@@ -39,6 +39,7 @@ public class MenuPrincipalController implements IController {
             switch (opcion) {
                 case 1 -> agregarProducto();
                 case 2 -> eliminarProducto();
+                case 3 -> actualizarProducto();
                 case 0 -> menuView.displayMessage("Volviendo al menú principal...");
                 default -> menuView.displayMessage("Opción no válida.");
             }
@@ -79,6 +80,17 @@ public class MenuPrincipalController implements IController {
         } catch (Exception e) {
             menuView.displayMessage("Error al agregar producto: " + e.getMessage());
         }
+    }
+
+    public void actualizarProducto() {
+        String codigo = productoView.obtenerCampoObligatorio("Código del producto a actualizar");
+        model.Producto existente = inventarioView.getInventario().searchByCode(codigo);
+        if (existente == null) {
+            menuView.displayMessage("No existe un producto con ese código.");
+            return;
+        }
+        productoView.actualizarProducto(existente);
+        menuView.displayMessage("Producto actualizado correctamente.");
     }
 
     private void eliminarProducto() {
