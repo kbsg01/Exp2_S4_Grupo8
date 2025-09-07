@@ -1,4 +1,6 @@
-public class Main {
+package demo;
+
+public class GestionInventario {
     public static void main(String[] args) {
 
     }
