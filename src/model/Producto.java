@@ -23,6 +23,7 @@ public class Producto {
         this.setDescripcion(descripcion);
         this.setStock(stock);
         this.setPrecio(precio);
+        this.setCategoria(categoria);
     }
 
     // Getters y Setters
@@ -32,7 +33,11 @@ public class Producto {
     public void setNombre(String nombre) { this.nombre = nombre; }
 
     public Categoria getCategoria() { return categoria; }
-    private void setCategoria(Categoria categoria) { this.categoria = categoria; }
+    public void setCategoria(Categoria categoria) {
+        if (categoria != null) {
+            this.categoria = categoria;
+        }
+    }
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
