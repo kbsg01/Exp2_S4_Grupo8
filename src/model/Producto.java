@@ -17,11 +17,11 @@ public class Producto {
      * @param precio Precio del producto.
      *
      * */
-    public Producto(String codigo, String nombre, String descripcion, double precio, int stock ) {
+    public Producto(String codigo, String nombre, Categoria categoria, String descripcion, double precio, int stock ) {
         this.codigo = codigo;
         this.setNombre(nombre);
         this.setDescripcion(descripcion);
-        this.setPrecio(stock);
+        this.setStock(stock);
         this.setPrecio(precio);
     }
 
