@@ -1,6 +1,6 @@
 package view;
 
-public class ProductoView implements IView{
+public class MenuPrincipalView implements IView {
     @Override
     public void displayMenu() {
 
@@ -20,6 +20,6 @@ public class ProductoView implements IView{
     public String getInput(String prompt) {
         return "";
     }
-    //TODO: Implementar la vista de producto
+    //TODO: Implementar vista para menu principal
 
 }
