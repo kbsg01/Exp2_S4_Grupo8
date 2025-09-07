@@ -43,7 +43,7 @@ public class Producto {
         System.out.println("Nombre: " + p.getNombre());
         System.out.printf("Categoría: %s%n", p.getCategoria() != null ? p.getCategoria() : "Sin categoría");
         System.out.println("Precio: $" + p.getPrecio());
-        System.out.println("Strok: "+ p.getStock());
+        System.out.println("Stock: "+ p.getStock());
         System.out.println("Descripción: " + descripcion);
         System.out.println("-".repeat(30));
     }
