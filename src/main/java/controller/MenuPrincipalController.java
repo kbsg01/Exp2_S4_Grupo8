@@ -3,7 +3,7 @@ import view.InventarioView;
 import view.MenuPrincipalView;
 import view.ProductoView;
 
-public class MenuPrincipalController implements IController {
+public class MenuPrincipalController {
     private final MenuPrincipalView menuView;
     private final ProductoView productoView;
     private final InventarioView inventarioView;
@@ -14,7 +14,6 @@ public class MenuPrincipalController implements IController {
         this.inventarioView = inventarioView;
     }
 
-    @Override
     public void run() {
         int opcion;
         do {
@@ -82,7 +81,8 @@ public class MenuPrincipalController implements IController {
         }
     }
 
-    public void actualizarProducto() {
+    private void actualizarProducto() {
+        System.out.println("* Al modificar un producto, si se deja algun campo vacio se mantiene el valor actual");
         String codigo = productoView.obtenerCampoObligatorio("Código del producto a actualizar");
         model.Producto existente = inventarioView.getInventario().searchByCode(codigo);
         if (existente == null) {

@@ -35,7 +35,8 @@ public class InventarioView {
     // Genera reporte inventario
     public void generarReporteInventario(){
         System.out.println("=== REPORTE DE INVENTARIO ===");
-        inventario.getReporteInventario();
+        System.out.println(inventario.getReporteInventario());
+        
     }
 
     //Buscar por ID

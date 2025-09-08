@@ -1,5 +1,6 @@
 package model;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * También ofrece funcionalidades para generar reportes del inventario.
  **/
 public class Inventario {
-    private final HashMap<String, Producto> productos;
+    private HashMap<String, Producto> productos;
 
     public Inventario() { this.productos = new HashMap<>(); }
 
@@ -18,13 +19,31 @@ public class Inventario {
      * Agrega un nuevo producto al inventario.
      * @param producto El producto a agregar.
      **/
-    public void addProducto(Producto producto) { productos.put(producto.getCodigo(), producto); }
+    public void addProducto(Producto producto) {
+        try {
+            if(this.productos.containsKey(producto.getCodigo())) {
+                throw new IllegalArgumentException("Producto ya existe");
+            }
+            productos.put(producto.getCodigo(), producto);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateProducto(Producto producto) {
+        if(!this.productos.containsKey(producto.getCodigo())) {
+            throw new IllegalArgumentException("Producto no existe");
+        }
+        productos.put(producto.getCodigo(), producto);
+    }
 
     /**
      * Elimina un producto del inventario basado en su código.
      * @param codigo El código del producto a eliminar.
      */
-    public void deleteProducto(String codigo) { productos.remove(codigo); }
+    public void deleteProducto(String codigo) {
+        productos.remove(codigo);
+    }
 
     /**
      * Busca un producto en el inventario basado en su código.
@@ -94,34 +113,34 @@ public class Inventario {
 
     /**
      * Genera un reporte del inventario, incluyendo el total de productos y el
-     * stock por categoría.
+     * stock, valor total del inventario.
+     * @return El reporte del inventario en formato String.
      */
-    public void getReporteInventario() {
-        System.out.println("-".repeat(30));
-        System.out.println("Total de productos en inventario: " + totalProductos());
-        System.out.println("Total de unidades en stock: " + totalUnidadesEnStock());
-        System.out.println("-".repeat(30));
-        System.out.println("- Valor total del inventario: $" + valorTotalInventario());
-        System.out.println("-".repeat(30));
-        System.out.println("- Productos con bajo stock (<= 5):");
-        productosConBajoStock(5);
-        System.out.println("-".repeat(30));
+    public String getReporteInventario() {
+        String reporte = "REPORTE DEL INVENTARIO\n";
+        reporte += "-".repeat(30) + "\n";
+        reporte += MessageFormat.format("Total de productos: {0}\n", totalProductos());
+        reporte += MessageFormat.format("Total de unidades en stock: {0}\n", totalUnidadesEnStock());
+        reporte += MessageFormat.format("Valor total del inventario: ${0}\n", valorTotalInventario());
+        reporte += "-".repeat(30) + "\n";
+        reporte += MessageFormat.format("ALERTA BAJO STOCK\n{0}\n", ((List<Producto>)productosConBajoStock(5)));
+        reporte += "-".repeat(30) + "\n";
+        reporte += MessageFormat.format("Fecha del reporte: {0}\n", java.time.LocalDate.now());
+        return reporte;
     }
 
     /**
      * Muestra el total de productos y unidades en stock en el inventario.
      **/
     public int totalProductos() {
-        int totalProductos = productos.size();
-        return totalProductos;
+        return productos.size();
     }
 
     /**
      * Muestra el total de unidades en stock en el inventario.
      **/
     public int totalUnidadesEnStock() {
-        int totalStock = productos.values().stream().mapToInt(Producto::getStock).sum();
-        return  totalStock;
+        return productos.values().stream().mapToInt(Producto::getStock).sum();
     }
 
     /**
@@ -129,14 +148,14 @@ public class Inventario {
      * @param umbral Valor máximo de stock para considerar un producto con bajo
      * stock.
      **/
-    public void productosConBajoStock(int umbral) {
-        boolean encontrado = false;
+    public List<Producto> productosConBajoStock(int umbral) {
+        List<Producto> bajoStock = new ArrayList<>();
         for (Producto p : productos.values()) {
             if (p.getStock() <= umbral) {
-                System.out.println(p.toString());
-                encontrado = true;
+                bajoStock.add(p);
             }
         }
+        return bajoStock;
     }
 
     /**
