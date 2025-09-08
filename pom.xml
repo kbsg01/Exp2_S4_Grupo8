@@ -28,6 +28,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>com.duoc.gestioninventariojava.GestionInventarioJava</exec.mainClass>
+        <exec.mainClass>demo.GestionInventario</exec.mainClass>
     </properties>
 </project>

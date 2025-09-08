@@ -82,6 +82,7 @@ public class MenuPrincipalController {
     }
 
     private void actualizarProducto() {
+        System.out.println("* Al modificar un producto, si se deja algun campo vacio se mantiene el valor actual");
         String codigo = productoView.obtenerCampoObligatorio("Código del producto a actualizar");
         model.Producto existente = inventarioView.getInventario().searchByCode(codigo);
         if (existente == null) {

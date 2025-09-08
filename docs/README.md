@@ -20,27 +20,31 @@ Permite agregar, eliminar, actualizar y listar productos en el inventario.
 
 El proyecto está organizado en las siguientes clases:
 - src:
-  - model:
-    - `Producto`: Representa un producto en el inventario.
-    - `Inventario`: Gestiona la lista de productos y las operaciones sobre ellos.
-    - `Categoria`: Enum para las categorías de productos.
+  - main:
+    - java:
+      - model:
+        - `Producto`: Representa un producto en el inventario.
+        - `Inventario`: Gestiona la lista de productos y las operaciones sobre ellos.
+        - `Categoria`: Enum para las categorías de productos.
 
-  - view:
-      - `IView`: 
-      - `MenuPrincipalView` implementa `IView`: Vista para el menú principal.
-      - `ProductoView` implementa `IView`: Vista específica para productos.
-      - `InventarioView` implementa `IView`: Vista específica para el inventario.
+      - view:
+          - `IView`: 
+          - `MenuPrincipalView` implementa `IView`: Vista para el menú principal.
+          - `ProductoView` implementa `IView`: Vista específica para productos.
+          - `InventarioView` implementa `IView`: Vista específica para el inventario.
 
-  - controller:
-      - `IController`: Interfaz para el controlador.
+      - controller:
+          - `IController`: Interfaz para el controlador.
 
-  - demo:
-    - `GestionInventario`: Clase principal que inicia la aplicación.
-
+      - demo:
+        - `GestionInventario`: Clase principal que inicia la aplicación.
   - test:
-    - `ProductoInventarioTest`: Pruebas de integración para las clases `Producto` e `Inventario`.
-    - `ProductoTest`: Pruebas unitarias para la clase `Producto`.
-    - `InventarioTest`: Pruebas unitarias para la clase `Inventario`.
+    - java:
+      - integracion:
+        - `ProductoInventarioTest`: Pruebas de integración para las clases `Producto` e `Inventario`.
+      - unitarias:
+        - `ProductoTest`: Pruebas unitarias para la clase `Producto`.
+        - `InventarioTest`: Pruebas unitarias para la clase `Inventario`.
 
 ## Ejecución del Proyecto
 Para ejecutar el proyecto, sigue estos pasos:
@@ -50,10 +54,8 @@ Para ejecutar el proyecto, sigue estos pasos:
 4. Ejecutar la clase `GestionInventario` para iniciar la aplicación.
 5. Seguir las instrucciones en la consola para gestionar el inventario.
 
-## Pruebas de integración
-El proyecto incluye pruebas de integración para las clases `Producto` e `Inventario` utilizando una clase especializada `ProductoInventarioTest`.
-Para ejecutar las pruebas, se debe ejecutar la clase `ProductoInventarioTest` desde el IDE o desde la línea de comandos.
-
-## Pruebas Unitarias
-El proyecto no incluye pruebas unitarias específicas.
-Para ejecutar las pruebas unitarias ejecutar la clase `ProductoTest` y `InventarioTest` desde el IDE o desde la línea de comandos.
+## Pruebas de integración y unitarias
+El proyecto incluye pruebas de integración y unitarias para asegurar la funcionalidad correcta de las clases principales
+implementadas con JUnit.
+- Las pruebas unitarias se encuentran en la carpeta `test/unitarias` y cubren métodos individuales de las clases `Producto` e `Inventario`.
+- Las pruebas de integración se encuentran en la carpeta `test/integracion` y verifican la interacción entre las clases `Producto` e `Inventario`.
