@@ -1,4 +1,6 @@
 # Semana 4 Formativa: GestionInventarioJava
+#Exp2_S4_Grupo8
+
 
 ## Descripción del Proyecto
 Este proyecto es una aplicación de consola en Java que permite gestionar el inventario de una tienda.
